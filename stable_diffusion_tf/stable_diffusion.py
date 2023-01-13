@@ -15,7 +15,15 @@ from PIL import Image
 MAX_TEXT_LEN = 77
 
 import os
-TO_DOWNLOAD = bool(os.environ.get("DOWNLOAD_WEIGHTS", False) )
+#TO_DOWNLOAD = bool(os.environ.get("DOWNLOAD_WEIGHTS", False) )
+
+
+if os.environ.get("DOWNLOAD_WEIGHTS", "no") == "no" :
+    TO_DOWNLOAD = False    
+
+if os.environ.get("DOWNLOAD_WEIGHTS", "no") == "yes" :
+    TO_DOWNLOAD = True    
+
 
 
 class StableDiffusion:
@@ -222,7 +230,10 @@ class StableDiffusion:
             getattr(self, module_name).set_weights(module_weights)
             print("Loaded %d weights for %s"%(len(module_weights) , module_name))
 
-def get_models(img_height, img_width, download_weights=True):
+
+
+
+def get_models(img_height, img_width, download_weights=TO_DOWNLOAD):
     n_h = img_height // 8
     n_w = img_width // 8
 
