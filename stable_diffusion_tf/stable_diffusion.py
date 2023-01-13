@@ -17,6 +17,7 @@ MAX_TEXT_LEN = 77
 import os
 #TO_DOWNLOAD = bool(os.environ.get("DOWNLOAD_WEIGHTS", False) )
 
+'''
 TO_DOWNLOAD = False
 dl_var      = os.environ.get("DOWNLOAD_WEIGHTS", "no")
 
@@ -25,11 +26,11 @@ if dl_var == "no" :
 
 if dl_var == "yes" :
     TO_DOWNLOAD = True    
-
+'''
 
 
 class StableDiffusion:
-    def __init__(self, img_height=1000, img_width=1000, jit_compile=False, download_weights=TO_DOWNLOAD):
+    def __init__(self, img_height=1000, img_width=1000, jit_compile=False, download_weights=False):
         self.img_height = img_height
         self.img_width = img_width
         self.tokenizer = SimpleTokenizer()
@@ -235,7 +236,7 @@ class StableDiffusion:
 
 
 
-def get_models(img_height, img_width, download_weights=TO_DOWNLOAD):
+def get_models(img_height, img_width, download_weights=False):
     n_h = img_height // 8
     n_w = img_width // 8
 
