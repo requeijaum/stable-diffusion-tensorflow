@@ -17,11 +17,13 @@ MAX_TEXT_LEN = 77
 import os
 #TO_DOWNLOAD = bool(os.environ.get("DOWNLOAD_WEIGHTS", False) )
 
+TO_DOWNLOAD = False
+dl_var      = os.environ.get("DOWNLOAD_WEIGHTS", "no")
 
-if os.environ.get("DOWNLOAD_WEIGHTS", "no") == "no" :
+if dl_var == "no" :
     TO_DOWNLOAD = False    
 
-if os.environ.get("DOWNLOAD_WEIGHTS", "no") == "yes" :
+if dl_var == "yes" :
     TO_DOWNLOAD = True    
 
 
