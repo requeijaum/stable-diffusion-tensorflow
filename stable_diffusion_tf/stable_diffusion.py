@@ -270,6 +270,9 @@ def get_models(img_height, img_width, download_weights=False):
     # e se vai passar sem baixar
 
     if download_weights:
+
+        print("[DEBUG] DOWNLOADING WEIGHTS !!! ")
+
         text_encoder_weights_fpath = keras.utils.get_file(
             origin="https://huggingface.co/fchollet/stable-diffusion/resolve/main/text_encoder.h5",
             file_hash="d7805118aeb156fc1d39e38a9a082b05501e2af8c8fbdc1753c9cb85212d6619",
@@ -292,4 +295,22 @@ def get_models(img_height, img_width, download_weights=False):
         diffusion_model.load_weights(diffusion_model_weights_fpath)
         decoder.load_weights(decoder_weights_fpath)
         encoder.load_weights(encoder_weights_fpath)
+
+    else :
+        
+        print("[DEBUG] Loading Local Weights ... ")
+
+        text_encoder_weights_fpath          = "text_encoder.h5"
+        diffusion_model_weights_fpath       = "diffusion_model.h5"
+        decoder_weights_fpath               = "decoder.h5"
+        encoder_weights_fpath               = "encoder_newW.h5"
+
+
+        text_encoder.load_weights(text_encoder_weights_fpath)
+        diffusion_model.load_weights(diffusion_model_weights_fpath)
+        decoder.load_weights(decoder_weights_fpath)
+        encoder.load_weights(encoder_weights_fpath)
+
+
+
     return text_encoder, diffusion_model, decoder , encoder
