@@ -14,9 +14,12 @@ from PIL import Image
 
 MAX_TEXT_LEN = 77
 
+import os
+TO_DOWNLOAD = bool(os.environ.get("DOWNLOAD_WEIGHTS", False) )
+
 
 class StableDiffusion:
-    def __init__(self, img_height=1000, img_width=1000, jit_compile=False, download_weights=True):
+    def __init__(self, img_height=1000, img_width=1000, jit_compile=False, download_weights=TO_DOWNLOAD):
         self.img_height = img_height
         self.img_width = img_width
         self.tokenizer = SimpleTokenizer()
@@ -246,6 +249,11 @@ def get_models(img_height, img_width, download_weights=True):
     inp_img = keras.layers.Input((img_height, img_width, 3))
     encoder = Encoder()
     encoder = keras.models.Model(inp_img, encoder(inp_img))
+
+    # hax @ 13jan2022
+    # verificar se estou passando cache
+    # se o programa vai apagar o cache (RO filesystem)
+    # e se vai passar sem baixar
 
     if download_weights:
         text_encoder_weights_fpath = keras.utils.get_file(
