@@ -35,7 +35,7 @@ class StableDiffusion:
         self.img_width = img_width
         self.tokenizer = SimpleTokenizer()
 
-        text_encoder, diffusion_model, decoder, encoder = get_models(img_height, img_width, download_weights=download_weights)
+        text_encoder, diffusion_model, decoder, encoder = get_models(img_height, img_width, download_weights=False)
         self.text_encoder = text_encoder
         self.diffusion_model = diffusion_model
         self.decoder = decoder
@@ -221,6 +221,11 @@ class StableDiffusion:
         return x_prev, pred_x0
 
     def load_weights_from_pytorch_ckpt(self , pytorch_ckpt_path):
+
+        print("[DEBUG] load_weights_from_pytorch_ckpt(pytorch_ckpt_path={}): ".format(
+            str(pytorch_ckpt_path)
+        ))
+
         import torch
         pt_weights = torch.load(pytorch_ckpt_path, map_location="cpu")
         for module_name in ['text_encoder', 'diffusion_model', 'decoder', 'encoder' ]:
@@ -237,6 +242,9 @@ class StableDiffusion:
 
 
 def get_models(img_height, img_width, download_weights=False):
+
+    print("[DEBUG] get_models() ")
+
     n_h = img_height // 8
     n_w = img_width // 8
 
@@ -300,10 +308,12 @@ def get_models(img_height, img_width, download_weights=False):
         
         print("[DEBUG] Loading Local Weights ... ")
 
-        text_encoder_weights_fpath          = "text_encoder.h5"
-        diffusion_model_weights_fpath       = "diffusion_model.h5"
-        decoder_weights_fpath               = "decoder.h5"
-        encoder_weights_fpath               = "encoder_newW.h5"
+        HC_PATH = "/app/data/datasets/"
+
+        text_encoder_weights_fpath          = HC_PATH+"text_encoder.h5"
+        diffusion_model_weights_fpath       = HC_PATH+"diffusion_model.h5"
+        decoder_weights_fpath               = HC_PATH+"decoder.h5"
+        encoder_weights_fpath               = HC_PATH+"encoder_newW.h5"
 
 
         text_encoder.load_weights(text_encoder_weights_fpath)
